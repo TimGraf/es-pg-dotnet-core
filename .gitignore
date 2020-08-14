@@ -2,3 +2,4 @@
 /api/bin/
 /api/obj/
 db_volume/
+es_volume/

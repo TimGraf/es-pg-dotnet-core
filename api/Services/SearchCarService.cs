@@ -1,7 +1,9 @@
 namespace api.Services
 {
+    using System.Threading.Tasks;
     using Microsoft.Extensions.Logging;
     using Nest;
+    using api.Models;
 
     public class SearchCarService : ISearchCarService
     {
@@ -12,6 +14,11 @@ namespace api.Services
         {
             _logger = logger;
             _elasticClient = elasticClient;
+        }
+
+        public async Task SaveCar(Car car)
+        {
+            await _elasticClient.IndexDocumentAsync<Car>(car);
         }
     }
 }

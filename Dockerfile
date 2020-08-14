@@ -15,5 +15,6 @@ RUN dotnet publish -c release -o /app
 # final stage/image
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 WORKDIR /app
+COPY ./api/dataset/cars_datasets.csv ./dataset/cars_datasets.csv
 COPY --from=build /app ./
-ENTRYPOINT ["dotnet", "NullJsonTest.dll"]
+ENTRYPOINT ["dotnet", "api.dll"]

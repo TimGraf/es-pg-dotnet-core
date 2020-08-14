@@ -18,7 +18,11 @@ namespace api.Services
 
         public int SaveCar(Car car)
         {
-            throw new System.NotImplementedException();
+            this._logger.LogInformation("CarService Saving car ...");
+            var rows = this._databaseCarService.SaveCar(car);
+            this._searchCarService.SaveCar(car);
+
+            return rows;
         }
     }
 }

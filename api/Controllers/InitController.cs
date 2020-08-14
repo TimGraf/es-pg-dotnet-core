@@ -23,10 +23,12 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Car> Get()
+        public IActionResult Get()
         {
+            this._logger.LogInformation("Initializing data ...");
             this._initService.InitData();
-            throw new NotImplementedException();
+
+            return Ok("Data inititalized");
         }
     }
 }

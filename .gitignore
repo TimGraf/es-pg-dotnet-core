@@ -1,0 +1,4 @@
+.vscode/
+/api/bin/
+/api/obj/
+db_volume/

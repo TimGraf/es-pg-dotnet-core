@@ -1,13 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import thunk from 'redux-thunk';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware} from 'redux'; 
+import rootReducer from './redux/rootReducer.js';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+const initialState = {cars: []};
+const store = createStore(rootReducer, initialState, applyMiddleware(thunk))
+
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 

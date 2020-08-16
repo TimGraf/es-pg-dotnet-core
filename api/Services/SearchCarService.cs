@@ -37,13 +37,10 @@ namespace api.Services
             return JsonConvert.SerializeObject(new { cars = result.Documents }, Formatting.None);
         }
 
-        public async Task<string> FilteredSearch(int year, string make, string model, string color, string query)
+        public async Task<string> Filter(int year, string make, string model, string color)
         {
             var result = await _elasticClient.SearchAsync<Car>(s => s
-                .Query(q => q
-                    .Match(m => m
-                        .Query(query)
-                    ) && +q
+                .Query(q => +q
                     .Match(m => m
                         .Field(o => o.year)
                         .Query($"{year}")

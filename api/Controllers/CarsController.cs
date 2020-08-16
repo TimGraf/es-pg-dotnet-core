@@ -43,10 +43,10 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        [Route("FilterSearch")]
-        public async Task<IActionResult> FilterSearch([FromQuery] int year, [FromQuery] string make, [FromQuery] string model, [FromQuery] string color, [FromQuery] string query)
+        [Route("Filter")]
+        public async Task<IActionResult> Filter([FromQuery] int year, [FromQuery] string make, [FromQuery] string model, [FromQuery] string color)
         {
-            var cars = await this._carService.FilteredSearch(year, make, model, color, query);
+            var cars = await this._carService.Filter(year, make, model, color);
             
             return Ok(cars);
         }

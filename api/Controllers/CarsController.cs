@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using api.Models;
+using api.Services;
 
 namespace api.Controllers
 {
@@ -13,10 +13,12 @@ namespace api.Controllers
     public class CarsController : ControllerBase
     {
         private readonly ILogger<CarsController> _logger;
+        private  ICarService _carService;
 
-        public CarsController(ILogger<CarsController> logger)
+        public CarsController(ILogger<CarsController> logger, ICarService carService)
         {
             _logger = logger;
+            _carService = carService;
         }
 
         [HttpGet]
@@ -30,5 +32,33 @@ namespace api.Controllers
         {
             throw new NotImplementedException();
         }
+
+        [HttpGet]
+        [Route("Search")]
+        public async Task<IActionResult> Search([FromQuery] string query)
+        {
+            var cars = await this._carService.Search(query);
+            
+            return Ok(cars);
+        }
+
+        [HttpGet]
+        [Route("Years")]
+        public async Task<IActionResult> Years()
+        {
+            var years = await this._carService.GetYears();
+            
+            return Ok(years);
+        }
+
+        [HttpGet]
+        [Route("Makes")]
+        public async Task<IActionResult> Makes()
+        {
+            var years = await this._carService.GetMakes();
+            
+            return Ok(years);
+        }
+
     }
 }

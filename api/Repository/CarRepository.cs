@@ -20,8 +20,21 @@ namespace api.Repository
         public int SaveCar(Car car)
         {
             this._logger.LogInformation("CarRepository Saving car ...");
-            string sql = "insert into cars(id, price, make, model, year, mileage, color, vin, state, country) values(@id, @price, @make, @model, @year, @mileage, @color, @vin, @state, @country);";
-            var rows = this._connection.Execute(sql, new {id = Guid.NewGuid(), price = car.price, make = car.make, model = car.model, year = car.year, mileage = car.mileage, color = car.color, vin = car.vin, state = car.state, country = car.country});
+            string sql = @"insert into cars(id, price, make, model, year, mileage, color, vin, state, country) 
+            values(@id, @price, @make, @model, @year, @mileage, @color, @vin, @state, @country);";
+            
+            var rows = this._connection.Execute(sql, new {
+                id = car.id, 
+                price = car.price, 
+                make = car.make, 
+                model = car.model, 
+                year = car.year, 
+                mileage = car.mileage, 
+                color = car.color,
+                vin = car.vin, 
+                state = car.state, 
+                country = car.country
+            });
 
             this._logger.LogInformation($"Affected rows {rows}");
 

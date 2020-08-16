@@ -2,6 +2,7 @@ namespace api.Services
 {
     using api.Models;
     using Microsoft.Extensions.Logging;
+    using System.Threading.Tasks;
 
     public class CarService : ICarService
     {
@@ -23,6 +24,21 @@ namespace api.Services
             this._searchCarService.SaveCar(car);
 
             return rows;
+        }
+
+        public async Task<string> Search(string query)
+        {
+            return await this._searchCarService.Search(query);
+        }
+
+        public async Task<string> GetYears()
+        {
+            return await this._searchCarService.GetYears();
+        }
+
+        public async Task<string> GetMakes()
+        {
+            return await this._searchCarService.GetMakes();
         }
     }
 }

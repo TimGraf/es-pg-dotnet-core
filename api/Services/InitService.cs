@@ -1,7 +1,7 @@
 namespace api.Services
 {
     using Microsoft.Extensions.Logging;
-    using Newtonsoft.Json;
+    using System;
     using System.Linq;
     using System.Globalization;
     using System.IO;
@@ -28,13 +28,22 @@ namespace api.Services
             var reader = new StreamReader(datasetFile);
             var csvReader = new CsvReader(reader, CultureInfo.CurrentCulture);
             csvReader.Configuration.RegisterClassMap<CarMap>();
-            var records = csvReader.GetRecords<Car>();
+            var records = csvReader.GetRecords<CarFromFile>();
 
-            this._logger.LogInformation($"A car record {JsonConvert.SerializeObject(records.First())}");
-
-            foreach (Car car in records)
+            foreach (CarFromFile car in records)
             {
-                this._carService.SaveCar(car);
+                this._carService.SaveCar(new Car {
+                    id = Guid.NewGuid(), 
+                    price = car.price, 
+                    make = car.make, 
+                    model = car.model, 
+                    year = car.year, 
+                    mileage = car.mileage, 
+                    color = car.color, 
+                    vin = car.vin, 
+                    state = car.state, 
+                    country = car.country
+                });
             }
 
             this._logger.LogInformation($"Loaded {records.Count()} records.");

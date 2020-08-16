@@ -7,5 +7,11 @@ namespace api.Services
     public interface ISearchCarService
     {
         Task SaveCar(Car car);
+
+        Task<string> Search(string query);
+        
+        Task<string> GetYears();
+
+        Task<string> GetMakes();
     }
 }

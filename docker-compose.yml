@@ -2,14 +2,26 @@ version: "3.4"
 
 services:
     api: 
-        image: api:latest
         depends_on:
             - "db"
+            - "es"
         build:
             context: .
-            dockerfile: Dockerfile
+            dockerfile: Dockerfile.api
         ports:
-            - "80:80"
+            - "5000:5000"
+        networks:
+            - api-dev
+
+    web:
+        tty: true
+        depends_on:
+            - "api"
+        build:
+            context: .
+            dockerfile: Dockerfile.web
+        ports:
+            - "3000:3000"
         networks:
             - api-dev
 

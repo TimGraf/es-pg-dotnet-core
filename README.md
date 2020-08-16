@@ -11,3 +11,7 @@ This project requies Docker.  Running `docker-compose up` will bring up the serv
 The data is loaded into Posgres and Elasticsearch by accessing the init endpoint on the service.
 
 http://localhost:5000/Init
+
+A bare bones React front end is available at the following url once everything is up and running.
+
+http://localhost:3000/

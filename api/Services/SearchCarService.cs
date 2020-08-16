@@ -26,10 +26,39 @@ namespace api.Services
 
         public async Task<string> Search(string query)
         {
-            var result = _elasticClient.Search<Car>(s => s
+            var result = await _elasticClient.SearchAsync<Car>(s => s
                 .Query(q => q
                     .Match(m => m
                         .Query(query)
+                    )
+                )
+            );
+
+            return JsonConvert.SerializeObject(new { cars = result.Documents }, Formatting.None);
+        }
+
+        public async Task<string> FilteredSearch(int year, string make, string model, string color, string query)
+        {
+            var result = await _elasticClient.SearchAsync<Car>(s => s
+                .Query(q => q
+                    .Match(m => m
+                        .Query(query)
+                    ) && +q
+                    .Match(m => m
+                        .Field(o => o.year)
+                        .Query($"{year}")
+                    ) && +q
+                    .Match(m => m
+                        .Field(o => o.make)
+                        .Query(make)
+                    ) && +q
+                    .Match(m => m
+                        .Field(o => o.model)
+                        .Query(model)
+                    ) && +q
+                    .Match(m => m
+                        .Field(o => o.color)
+                        .Query(color)
                     )
                 )
             );

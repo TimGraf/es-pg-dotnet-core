@@ -10,6 +10,8 @@ namespace api.Services
 
         Task<string> Search(string query);
 
+        Task<string> FilteredSearch(int year, string make, string model, string color, string query);
+
         Task<string> GetYears();
 
         Task<string> GetMakes();

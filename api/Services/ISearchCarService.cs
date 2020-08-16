@@ -9,6 +9,8 @@ namespace api.Services
         Task SaveCar(Car car);
 
         Task<string> Search(string query);
+
+        Task<string> FilteredSearch(int year, string make, string model, string color, string query);
         
         Task<string> GetYears();
 

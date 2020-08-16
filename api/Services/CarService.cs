@@ -31,6 +31,11 @@ namespace api.Services
             return await this._searchCarService.Search(query);
         }
 
+        public async Task<string> FilteredSearch(int year, string make, string model, string color, string query)
+        {
+            return await this._searchCarService.FilteredSearch(year, make, model, color, query);
+        }
+
         public async Task<string> GetYears()
         {
             return await this._searchCarService.GetYears();

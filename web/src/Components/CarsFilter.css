@@ -1,0 +1,6 @@
+.cars-filter {
+    border: 1px black solid;
+    padding: 1em;
+    display: grid;
+    grid-gap: 0.25em;
+}

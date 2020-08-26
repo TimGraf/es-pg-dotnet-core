@@ -3,8 +3,8 @@ import './CarsSearch.css'
 
 export default function CarsSearch() {
     return (
-        <div>
-            <input type="text" name="search" placeholder="Search"></input>
+        <div className="cars-search">
+            <input className="cars-search-input" type="text" name="search" placeholder="Search"></input>
         </div>
     )
 }

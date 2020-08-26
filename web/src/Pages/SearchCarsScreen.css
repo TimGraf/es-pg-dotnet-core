@@ -1,0 +1,18 @@
+.wrapper {
+    display: grid;
+    padding: 1em;
+    grid-gap: 0.25em;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.search {
+    grid-column: 1/7;
+}
+
+.filter {
+    grid-column: 1;
+}
+
+.results {
+    grid-column: 2/7;
+}

@@ -30,7 +30,6 @@ namespace api.Services
                 .Query(q => q
                     .QueryString(c => c
                         .Query(query)
-                        .DefaultOperator(Operator.Or)
                     )
                 )
                 .Size(200)

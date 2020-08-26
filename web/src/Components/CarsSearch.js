@@ -1,10 +1,42 @@
-import React from 'react'
-import './CarsSearch.css'
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import './CarsSearch.css';
+import searchCarsActions from '../redux/actions';
 
 export default function CarsSearch() {
+    // Initializing dispatch
+    const dispatch = useDispatch();
+
+    // Setting up local state using the useState hook
+    const [search, setSearch] = useState();
+
+    const onChange = event => {
+        setSearch(event.target.value);
+    }
+
+    const applySearch = e => {
+        e.preventDefault();
+        dispatch(searchCarsActions.searchCars(search));
+    }
+
     return (
-        <div className="cars-search">
-            <input className="cars-search-input" type="text" name="search" placeholder="Search"></input>
+        <div className="search-wrapper">
+            <input 
+                className="search" 
+                type="text" 
+                name="search" 
+                placeholder="Search"
+                value={search}
+                onChange={onChange}
+            >
+            </input>
+            <input 
+                className="search-button"
+                type="button"
+                onClick={applySearch}
+                value="Apply Search"
+            >
+            </input>
         </div>
     )
 }

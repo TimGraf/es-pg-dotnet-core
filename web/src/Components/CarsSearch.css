@@ -1,5 +1,15 @@
-.cars-search {
+.search-wrapper {
     border: 1px black solid;
     padding: 1em;
     display: grid;
+    grid-gap: 0.25em;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.search {
+    grid-column: 1/7;
+}
+
+.search-button {
+    grid-column: 7;
 }

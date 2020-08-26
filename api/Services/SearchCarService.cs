@@ -28,10 +28,12 @@ namespace api.Services
         {
             var result = await _elasticClient.SearchAsync<Car>(s => s
                 .Query(q => q
-                    .Match(m => m
+                    .QueryString(c => c
                         .Query(query)
+                        .DefaultOperator(Operator.Or)
                     )
                 )
+                .Size(200)
             );
 
             return JsonConvert.SerializeObject(new { cars = result.Documents }, Formatting.None);

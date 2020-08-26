@@ -25,7 +25,7 @@ export default function CarsFilter() {
     }
 
     return (
-        <div className="cars-filter">
+        <div className="filter-wrapper">
             <input 
                 type="text" 
                 name="year" 

@@ -9,10 +9,10 @@ export default function CarsFilter() {
 
     // Setting up local state using the useState hook
     const [filters, setFilters] = useState({
-        year: 2010,
-        make: 'ford',
-        model: 'pk',
-        color: 'white'
+        year: null,
+        make: '',
+        model: '',
+        color: ''
     });
 
     const onChange = event => {

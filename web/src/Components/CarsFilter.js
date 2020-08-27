@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './CarsFilter.css'
-import filterCarsActions from '../redux/actions';
+import carsActions from '../redux/actions';
 
 export default function CarsFilter() {
     // Initializing dispatch
@@ -21,7 +21,7 @@ export default function CarsFilter() {
 
     const applyFilter = e => {
         e.preventDefault();
-        dispatch(filterCarsActions.filterCars(filters));
+        dispatch(carsActions.filterSearchCars(filters));
     }
 
     return (
@@ -30,7 +30,7 @@ export default function CarsFilter() {
                 type="text" 
                 name="year" 
                 placeholder="Year" 
-                value={filters.year}
+                value={filters.year || ""}
                 onChange={onChange}
             >
             </input>

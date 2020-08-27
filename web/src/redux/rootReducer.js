@@ -10,6 +10,11 @@ export default (state = {}, { type, payload }) => {
                 ...state,
                 cars: payload
             };
+        case 'FILTER_SEARCH_CARS':
+            return {
+                ...state,
+                cars: payload
+            };
         default:
             return state;
     }

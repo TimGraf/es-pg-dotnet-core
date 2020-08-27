@@ -12,6 +12,9 @@ namespace api.Services
 
         Task<string> Filter(int year, string make, string model, string color);
 
+        #nullable enable
+        Task<string> FilterSearch(int? year, string? make, string? model, string? color, string? query);
+
         Task<string> GetYears();
 
         Task<string> GetMakes();

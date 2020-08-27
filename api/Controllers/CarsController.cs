@@ -51,6 +51,16 @@ namespace api.Controllers
             return Ok(cars);
         }
 
+        #nullable enable
+        [HttpGet]
+        [Route("FilterSearch")]
+        public async Task<IActionResult> FilterSearch([FromQuery] int? year, [FromQuery] string? make, [FromQuery] string? model, [FromQuery] string? color, [FromQuery] string? query)
+        {
+            var cars = await this._carService.FilterSearch(year, make, model, color, query);
+            
+            return Ok(cars);
+        }
+
         [HttpGet]
         [Route("Years")]
         public async Task<IActionResult> Years()

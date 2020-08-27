@@ -17,7 +17,7 @@ export default function CarsResults({cars}) {
                 <tbody>
                     {cars.map((car, index) => {
                         return (
-                            <tr>
+                            <tr key={index}>
                                 <td>
                                     {index + 1}
                                 </td>

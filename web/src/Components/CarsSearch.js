@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './CarsSearch.css';
-import searchCarsActions from '../redux/actions';
+import carsActions from '../redux/actions';
 
 export default function CarsSearch() {
     // Initializing dispatch
@@ -16,7 +16,7 @@ export default function CarsSearch() {
 
     const applySearch = e => {
         e.preventDefault();
-        dispatch(searchCarsActions.searchCars(search));
+        dispatch(carsActions.filterSearchCars({ query: search }));
     }
 
     return (

@@ -65,6 +65,38 @@ namespace api.Services
             return JsonConvert.SerializeObject(new { cars = result.Documents }, Formatting.None);
         }
 
+        #nullable enable
+        public async Task<string> FilterSearch(int? year, string? make, string? model, string? color, string? query)
+        {
+            var yearString = year != null ? $"{year}" : "";
+            var result = await _elasticClient.SearchAsync<Car>(s => s
+                .Query(q => q
+                    .Match(m => m
+                        .Field(o => o.year)
+                        .Query(yearString)
+                    ) && q
+                    .Match(m => m
+                        .Field(o => o.make)
+                        .Query(make)
+                    ) && q
+                    .Match(m => m
+                        .Field(o => o.model)
+                        .Query(model)
+                    ) && q
+                    .Match(m => m
+                        .Field(o => o.color)
+                        .Query(color)
+                    ) && q
+                    .QueryString(c => c
+                        .Query(query)
+                    )
+                )
+                .Size(200)
+            );
+
+            return JsonConvert.SerializeObject(new { cars = result.Documents }, Formatting.None);
+        }
+
         public async Task<string> GetYears()
         {
             var result = await _elasticClient.SearchAsync<Car>(s => s

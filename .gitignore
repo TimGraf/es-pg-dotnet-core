@@ -1,4 +1,5 @@
 .vscode/
+.DS_Strore
 /api/bin/
 /api/obj/
 db_volume/

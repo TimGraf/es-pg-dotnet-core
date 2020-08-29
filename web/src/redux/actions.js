@@ -15,6 +15,17 @@ const filterSearchCarsAction = (cars, filterSearch) => ({
     payload: { cars: cars, filterSearch: filterSearch }
 });
 
+const getCarYearsAction = (years) => ({
+    type: 'GET_YEARS',
+    payload: years
+});
+
+
+const getCarMakesAction = (makes) => ({
+    type: 'GET_MAKES',
+    payload: makes
+});
+
 // Fetch
 
 const filterCars = filter => dispatch => {
@@ -50,6 +61,38 @@ const searchCars = search => dispatch => {
         .then(r => r.json())
         .then(data => {
             dispatch(searchCarsAction(data.cars));
+        });
+};
+
+const getYears = () => dispatch => {
+    const ADDRESS_URL = new URL('http://localhost:5000/Cars/Years');
+    const config = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    fetch(ADDRESS_URL, config)
+        .then(r => r.json())
+        .then(data => {
+            dispatch(getCarYearsAction(data.years));
+        });
+};
+
+const getMakes = () => dispatch => {
+    const ADDRESS_URL = new URL('http://localhost:5000/Cars/Makes');
+    const config = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    fetch(ADDRESS_URL, config)
+        .then(r => r.json())
+        .then(data => {
+            dispatch(getCarMakesAction(data.makes));
         });
 };
 
@@ -92,4 +135,4 @@ const filterSearchCars = filterSearch => dispatch => {
         });
 };
 
-export default { filterCars, searchCars, filterSearchCars };
+export default { filterCars, searchCars, filterSearchCars, getYears, getMakes };

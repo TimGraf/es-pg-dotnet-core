@@ -16,6 +16,16 @@ export default (state = {}, { type, payload }) => {
                 cars: payload.cars,
                 filterSearch: payload.filterSearch
             };
+        case 'GET_YEARS':
+            return {
+                ...state,
+                years: payload
+            };
+        case 'GET_MAKES':
+            return {
+                ...state,
+                makes: payload
+            };
         default:
             return state;
     }

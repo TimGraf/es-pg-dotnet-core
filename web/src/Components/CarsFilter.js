@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField, Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 import './CarsFilter.css'
 import carsActions from '../redux/actions';
 
@@ -8,10 +8,12 @@ export default function CarsFilter() {
     // Initializing dispatch
     const dispatch = useDispatch();
     const filterSearch = useSelector(state => state.filterSearch);
+    const years = useSelector(state => state.years);
+    const makes = useSelector(state => state.makes);
 
     // Setting up local state using the useState hook
     const [filters, setFilters] = useState({
-        year: null,
+        year: 2010,
         make: '',
         model: '',
         color: ''
@@ -26,26 +28,41 @@ export default function CarsFilter() {
         dispatch(carsActions.filterSearchCars({ ...filters, query: filterSearch.query }));
     }
 
+    useEffect(() => {
+        dispatch(carsActions.getYears());
+        years.sort((a, b) => { return parseInt(a) - parseInt(b); });
+        dispatch(carsActions.getMakes());
+        makes.sort();
+    }, []); // unly run once
+
     return (
         <div className="filter-wrapper">
-            <TextField 
-                type="text" 
-                name="year" 
-                placeholder="Year" 
-                value={filters.year || ""}
-                onChange={onChange}
-                variant="outlined"
-            >
-            </TextField>
-            <TextField 
-                type="text" 
-                name="make" 
-                placeholder="Make" 
-                value={filters.make}
-                onChange={onChange}
-                variant="outlined"
-            >
-            </TextField>
+            <FormControl variant="outlined">
+                <InputLabel>Year</InputLabel>
+                <Select
+                    value={filters.year}
+                    name="year"
+                    onChange={onChange}
+                    label="Year"
+                >
+                    {years.map((year, index) => (
+                        <MenuItem key={index} value={year}>{year}</MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+            <FormControl variant="outlined">
+                <InputLabel>Make</InputLabel>
+                <Select
+                    value={filters.make}
+                    name="make"
+                    onChange={onChange}
+                    label="Make"
+                >
+                    {makes.map((make, index) => (
+                        <MenuItem key={index} value={make}>{make}</MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
             <TextField 
                 type="text" 
                 name="model" 

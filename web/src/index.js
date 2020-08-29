@@ -10,9 +10,11 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 const initialState = {
-  cars: [], 
+  cars: [],
+  years: [],
+  makes: [],
   filterSearch: {
-    year: null,
+    year: 2010,
     make: '',
     model: '',
     color: ''

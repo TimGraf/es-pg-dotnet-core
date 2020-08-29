@@ -10,9 +10,9 @@ const searchCarsAction = cars => ({
     payload: cars
 });
 
-const filterSearchCarsAction = cars => ({
+const filterSearchCarsAction = (cars, filterSearch) => ({
     type: 'FILTER_SEARCH_CARS',
-    payload: cars
+    payload: { cars: cars, filterSearch: filterSearch }
 });
 
 // Fetch
@@ -88,7 +88,7 @@ const filterSearchCars = filterSearch => dispatch => {
     fetch(ADDRESS_URL, config)
         .then(r => r.json())
         .then(data => {
-            dispatch(filterSearchCarsAction(data.cars));
+            dispatch(filterSearchCarsAction(data.cars, filterSearch));
         });
 };
 

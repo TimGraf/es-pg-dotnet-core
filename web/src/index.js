@@ -9,7 +9,15 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-const initialState = {cars: []};
+const initialState = {
+  cars: [], 
+  filterSearch: {
+    year: null,
+    make: '',
+    model: '',
+    color: ''
+  }
+};
 const store = createStore(rootReducer, initialState, applyMiddleware(thunk))
 
 ReactDOM.render(

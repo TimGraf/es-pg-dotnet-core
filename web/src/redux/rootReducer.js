@@ -13,7 +13,8 @@ export default (state = {}, { type, payload }) => {
         case 'FILTER_SEARCH_CARS':
             return {
                 ...state,
-                cars: payload
+                cars: payload.cars,
+                filterSearch: payload.filterSearch
             };
         default:
             return state;

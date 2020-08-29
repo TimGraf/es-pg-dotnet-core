@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, TextField } from '@material-ui/core';
 import './CarsFilter.css'
 import carsActions from '../redux/actions';
@@ -7,6 +7,7 @@ import carsActions from '../redux/actions';
 export default function CarsFilter() {
     // Initializing dispatch
     const dispatch = useDispatch();
+    const filterSearch = useSelector(state => state.filterSearch);
 
     // Setting up local state using the useState hook
     const [filters, setFilters] = useState({
@@ -15,7 +16,6 @@ export default function CarsFilter() {
         model: '',
         color: ''
     });
-    const [search] = useState();
 
     const onChange = event => {
         setFilters({ ...filters, [event.target.name]: event.target.value });
@@ -23,7 +23,7 @@ export default function CarsFilter() {
 
     const applyFilter = e => {
         e.preventDefault();
-        dispatch(carsActions.filterSearchCars({ ...filters, query: search }));
+        dispatch(carsActions.filterSearchCars({ ...filters, query: filterSearch.query }));
     }
 
     return (

@@ -15,3 +15,5 @@ http://localhost:5000/Init
 A bare bones React front end is available at the following url once everything is up and running.
 
 http://localhost:3000/
+
+![Screenshot](./docs/ScreenShot.png "Screen Shot")

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Button, TextField } from '@material-ui/core';
 import './CarsSearch.css';
 import carsActions from '../redux/actions';
 
@@ -8,6 +9,12 @@ export default function CarsSearch() {
     const dispatch = useDispatch();
 
     // Setting up local state using the useState hook
+    const [filters, setFilters] = useState({
+        year: null,
+        make: '',
+        model: '',
+        color: ''
+    });
     const [search, setSearch] = useState();
 
     const onChange = event => {
@@ -16,27 +23,30 @@ export default function CarsSearch() {
 
     const applySearch = e => {
         e.preventDefault();
-        dispatch(carsActions.filterSearchCars({ query: search }));
+        dispatch(carsActions.filterSearchCars({ ...filters, query: search }));
     }
 
     return (
         <div className="search-wrapper">
-            <input 
+            <TextField 
                 className="search" 
                 type="text" 
                 name="search" 
                 placeholder="Search"
                 value={search}
                 onChange={onChange}
+                variant="outlined"
             >
-            </input>
-            <input 
+            </TextField>
+            <Button 
                 className="search-button"
                 type="button"
                 onClick={applySearch}
-                value="Apply Search"
+                variant="contained" 
+                color="primary"
             >
-            </input>
+                Apply Search
+            </Button>
         </div>
     )
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Button, TextField } from '@material-ui/core';
 import './CarsFilter.css'
 import carsActions from '../redux/actions';
 
@@ -14,6 +15,7 @@ export default function CarsFilter() {
         model: '',
         color: ''
     });
+    const [search] = useState();
 
     const onChange = event => {
         setFilters({ ...filters, [event.target.name]: event.target.value });
@@ -21,49 +23,55 @@ export default function CarsFilter() {
 
     const applyFilter = e => {
         e.preventDefault();
-        dispatch(carsActions.filterSearchCars(filters));
+        dispatch(carsActions.filterSearchCars({ ...filters, query: search }));
     }
 
     return (
         <div className="filter-wrapper">
-            <input 
+            <TextField 
                 type="text" 
                 name="year" 
                 placeholder="Year" 
                 value={filters.year || ""}
                 onChange={onChange}
+                variant="outlined"
             >
-            </input>
-            <input 
+            </TextField>
+            <TextField 
                 type="text" 
                 name="make" 
                 placeholder="Make" 
                 value={filters.make}
                 onChange={onChange}
+                variant="outlined"
             >
-            </input>
-            <input 
+            </TextField>
+            <TextField 
                 type="text" 
                 name="model" 
                 placeholder="Model" 
                 value={filters.model}
                 onChange={onChange}
+                variant="outlined"
             >
-            </input>
-            <input 
+            </TextField>
+            <TextField 
                 type="text" 
                 name="color" 
                 placeholder="Color" 
                 value={filters.color}
                 onChange={onChange}
+                variant="outlined"
             >
-            </input>
-            <input 
+            </TextField>
+            <Button
                 type="button"
                 onClick={applyFilter}
-                value="Apply Filter"
+                variant="contained" 
+                color="primary"
             >
-            </input>
+                Apply Filter
+            </Button>
         </div>
     )
 }

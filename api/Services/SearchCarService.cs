@@ -70,23 +70,23 @@ namespace api.Services
         {
             var yearString = year != null ? $"{year}" : "";
             var result = await _elasticClient.SearchAsync<Car>(s => s
-                .Query(q => q
+                .Query(q => +q
                     .Match(m => m
                         .Field(o => o.year)
                         .Query(yearString)
-                    ) && q
+                    ) && +q
                     .Match(m => m
                         .Field(o => o.make)
                         .Query(make)
-                    ) && q
+                    ) && +q
                     .Match(m => m
                         .Field(o => o.model)
                         .Query(model)
-                    ) && q
+                    ) && +q
                     .Match(m => m
                         .Field(o => o.color)
                         .Query(color)
-                    ) && q
+                    ) && +q
                     .QueryString(c => c
                         .Query(query)
                     )

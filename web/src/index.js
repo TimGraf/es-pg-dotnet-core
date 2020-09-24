@@ -17,7 +17,8 @@ const initialState = {
     year: 2010,
     make: '',
     model: '',
-    color: ''
+    color: '',
+    search: ''
   }
 };
 const store = createStore(rootReducer, initialState, applyMiddleware(thunk))

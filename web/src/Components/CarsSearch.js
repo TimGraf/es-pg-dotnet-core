@@ -1,24 +1,16 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Button, TextField } from '@material-ui/core';
+import React, { useState, useContext } from 'react';
+import { TextField } from '@material-ui/core';
+import { CarsContext } from '../contexts/CarsContext';
 import './CarsSearch.css';
-import carsActions from '../redux/actions';
 
 export default function CarsSearch() {
-    // Initializing dispatch
-    const dispatch = useDispatch();
-    const filterSearch = useSelector(state => state.filterSearch);
-
-    // Setting up local state using the useState hook
-    const [search, setSearch] = useState();
+    const [search, setSearch] = useState('');
+    const [{ filterSearch, setFilterSearch }] = useContext(CarsContext);
 
     const onChange = event => {
-        setSearch(event.target.value);
-    }
-
-    const applySearch = e => {
-        e.preventDefault();
-        dispatch(carsActions.filterSearchCars({ ...filterSearch, query: search }));
+        const searchValue = event.target.value;
+        setSearch(searchValue);
+        setFilterSearch({ ...filterSearch, query: searchValue });
     }
 
     return (
@@ -33,15 +25,6 @@ export default function CarsSearch() {
                 variant="outlined"
             >
             </TextField>
-            <Button 
-                className="search-button"
-                type="button"
-                onClick={applySearch}
-                variant="contained" 
-                color="primary"
-            >
-                Apply Search
-            </Button>
         </div>
     )
 }

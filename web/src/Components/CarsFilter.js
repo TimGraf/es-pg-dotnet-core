@@ -1,46 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Button, TextField, Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
+import React, { useState, useContext, useEffect } from 'react';
+import { TextField, Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
+import { CarsContext } from '../contexts/CarsContext';
 import './CarsFilter.css'
-import carsActions from '../redux/actions';
 
 export default function CarsFilter() {
-    // Initializing dispatch
-    const dispatch = useDispatch();
-    const filterSearch = useSelector(state => state.filterSearch);
-    const years = useSelector(state => state.years);
-    const makes = useSelector(state => state.makes);
+    const [years, setYears] = useState([]);
+    const [makes, setMakes] = useState([]);
+    const [{ filterSearch, setFilterSearch }] = useContext(CarsContext);
 
-    // Setting up local state using the useState hook
-    const [filters, setFilters] = useState({
-        year: 2010,
-        make: '',
-        model: '',
-        color: ''
-    });
-
-    const onChange = event => {
-        setFilters({ ...filters, [event.target.name]: event.target.value });
-    }
-
-    const applyFilter = e => {
-        e.preventDefault();
-        dispatch(carsActions.filterSearchCars({ ...filters, query: filterSearch.query }));
-    }
+    const getYears = () => {
+        const ADDRESS_URL = new URL('http://localhost:5000/Cars/Years');
+        const config = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+    
+        fetch(ADDRESS_URL, config)
+            .then(r => r.json())
+            .then(data => {
+                let yearsRes = data.years;
+                yearsRes.sort((a, b) => { return parseInt(a) - parseInt(b); });
+                setYears(yearsRes);
+            });
+    };
+    
+    const getMakes = () => {
+        const ADDRESS_URL = new URL('http://localhost:5000/Cars/Makes');
+        const config = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+    
+        fetch(ADDRESS_URL, config)
+            .then(r => r.json())
+            .then(data => {
+                let makesRes = data.makes;
+                makesRes.sort();
+                setMakes(makesRes);
+            });
+    };
 
     useEffect(() => {
-        dispatch(carsActions.getYears());
-        years.sort((a, b) => { return parseInt(a) - parseInt(b); });
-        dispatch(carsActions.getMakes());
-        makes.sort();
-    }, []); // unly run once
+        getYears();
+        getMakes();
+    }, []);
+
+    const onChange = event => {
+        setFilterSearch({ ...filterSearch, [event.target.name]: event.target.value });
+    }
 
     return (
         <div className="filter-wrapper">
             <FormControl variant="outlined">
                 <InputLabel>Year</InputLabel>
                 <Select
-                    value={filters.year}
+                    value={filterSearch.year}
                     name="year"
                     onChange={onChange}
                     label="Year"
@@ -53,7 +71,7 @@ export default function CarsFilter() {
             <FormControl variant="outlined">
                 <InputLabel>Make</InputLabel>
                 <Select
-                    value={filters.make}
+                    value={filterSearch.make}
                     name="make"
                     onChange={onChange}
                     label="Make"
@@ -67,7 +85,7 @@ export default function CarsFilter() {
                 type="text" 
                 name="model" 
                 placeholder="Model" 
-                value={filters.model}
+                value={filterSearch.model}
                 onChange={onChange}
                 variant="outlined"
             >
@@ -76,19 +94,11 @@ export default function CarsFilter() {
                 type="text" 
                 name="color" 
                 placeholder="Color" 
-                value={filters.color}
+                value={filterSearch.color}
                 onChange={onChange}
                 variant="outlined"
             >
             </TextField>
-            <Button
-                type="button"
-                onClick={applyFilter}
-                variant="contained" 
-                color="primary"
-            >
-                Apply Filter
-            </Button>
         </div>
     )
 }
